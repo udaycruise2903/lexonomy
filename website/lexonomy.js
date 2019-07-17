@@ -1061,6 +1061,9 @@ app.get(siteconfig.rootPath + ":dictID/skeget/xampl/", function (req, res) {
       if (req.query.querytype == "skesimple") { url += "&iquery=" + encodeURIComponent(req.query.query) } else { url += "&queryselector=cqlrow&cql=" + encodeURIComponent(req.query.query) }
       url += "&viewmode=sen";
       url += "&gdex_enabled=1";
+      if (req.query.refs != "") 
+        url += "&refs=" + ref.query.refs;
+
       if (req.query.fromp) url += "&" + req.query.fromp;
       https.get(url, function (getres) {
         getres.setEncoding("utf8");
