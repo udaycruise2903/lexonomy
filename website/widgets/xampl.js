@@ -26,6 +26,11 @@ Xampl.render=function(div, json){
   $block.append("<div class='error' style='display: none;'></div>");
   Xampl.validateTemplate();
 
+  var $block=$("<div class='block refs'></div>").appendTo($div);
+  $block.append("<div class='title'>Refs</div>");
+  $block.append("<input type='text' spellcheck='false'></input>");
+  $block.append("<div class='instro'>This are additional ref parameters when requesting data from ske, they should be divided using comma.</div>");
+
   var $block=$("<div class='block markup'></div>").appendTo($div);
 	$block.append("<div class='title'>Headword mark-up</div>");
   $block.append("<select></select>");
@@ -41,6 +46,7 @@ Xampl.harvest=function(div){
   ret.container=$(".pillarform .block.container select").val();
   ret.template=$(".pillarform .block.template textarea").val();
   ret.markup=$(".pillarform .block.markup select").val();
+  ret.refs=$(".pillarform .block.refs input").val();
   return ret;
 };
 

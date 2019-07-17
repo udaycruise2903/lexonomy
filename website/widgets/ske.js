@@ -268,7 +268,7 @@ Ske.searchExamples=function(fromp){
   var query=$.trim($(".skebox input.textbox:enabled").val());
   var querytype=$("input[name=skesearchtype]:checked").val();
   if(query!="") {
-    $.get(rootPath+dictID+"/skeget/xampl/", {url: kex.apiurl, corpus: kex.corpus, username: ske_username, apikey: ske_apiKey, querytype: querytype, query: query, fromp: fromp}, function(json){
+    $.get(rootPath+dictID+"/skeget/xampl/", {url: kex.apiurl, corpus: kex.corpus, username: ske_username, apikey: ske_apiKey, querytype: querytype, query: query, fromp: fromp, refs:xampl_refs}, function(json){
         $(".skebox .choices").html("");
         if(json.error && json.error=="Empty result"){
           $(".skebox .choices").html("<div class='error'>No results found.</div>");
@@ -285,6 +285,7 @@ Ske.searchExamples=function(fromp){
             var txt=left+"<b>"+kwic+"</b>"+right;
             txt=txt.replace("<b> ", " <b>");
             txt=txt.replace(" </b>", "</b> ");
+            // here you not just set the txt of inside span, but also add ref="line.ref" to label element
             $(".skebox .choices").append("<label><input type='checkbox' onchange='Ske.toggleExample(this)'/><span class='inside'>"+txt+"</span></label>");
             $(".skebox .waiter").hide();
             $(".skebox .choices").fadeIn();
@@ -310,6 +311,8 @@ Ske.insertExamples=function(){
         txt=txt.replace("<b>", "");
         txt=txt.replace("</b>", "");
       }
+      // here I would go do some regex searching for $something and replace that with 
+      // data from $label, instead of just one replace statement
       var xml=xampl.template.replace("$text", txt);
       if(Ske.htmlID) Xonomy.newElementChild(Ske.htmlID, xml); else Xonomy.newElementLayby(xml);
     }
