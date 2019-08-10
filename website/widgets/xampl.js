@@ -28,7 +28,9 @@ Xampl.render=function(div, json){
 
   var $block=$("<div class='block refs'></div>").appendTo($div);
   $block.append("<div class='title'>Refs</div>");
-  $block.append("<input type='text' spellcheck='false'></input>");
+  var input_element = $("<input type='text' spellcheck='false'></input>");
+  input_element.val(json.refs);
+  $block.append(input_element);
   $block.append("<div class='instro'>This are additional ref parameters when requesting data from ske, they should be divided using comma.</div>");
 
   var $block=$("<div class='block markup'></div>").appendTo($div);
