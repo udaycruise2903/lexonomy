@@ -1044,44 +1044,48 @@ app.get(siteconfig.rootPath + ":dictID/import.json", function (req, res) {
 
 // SKETCH ENGINE PROXY:
 app.get(siteconfig.rootPath + ":dictID/skeget/xampl/", function (req, res) {
+	process.stderr.write("\n\n");
+	process.stderr.write("HERERER!");
+	process.stderr.write("\n\n");
+
   if (!ops.dictExists(req.params.dictID)) { res.status(404).render("404.ejs", { siteconfig: siteconfig }); return }
   var db = ops.getDB(req.params.dictID, true);
-  ops.verifyLoginAndDictAccess(req.cookies.email, req.cookies.sessionkey, db, req.params.dictID, function (user) {
-    if (!user.canEdit) {
-      db.close();
-      res.json({ success: false });
-    } else {
-      db.close();
-      var url = req.query.url;
-      url += "/first";
-      url += "?corpname=" + req.query.corpus;
-      url += "&username=" + req.query.username;
-      url += "&api_key=" + req.query.apikey;
-      url += "&format=json";
-      if (req.query.querytype == "skesimple") { url += "&iquery=" + encodeURIComponent(req.query.query) } else { url += "&queryselector=cqlrow&cql=" + encodeURIComponent(req.query.query) }
-      url += "&viewmode=sen";
-      url += "&gdex_enabled=1";
-      //if (req.query.refs != "") 
-      //  url += "&refs=" + req.query.refs;
+  ops.readDictConfigs(db, req.params.dictID, function (configs) {
+    ops.verifyLoginAndDictAccess(req.cookies.email, req.cookies.sessionkey, db, req.params.dictID, function (user) {
+      if (!user.canEdit) {
+        db.close();
+        res.json({ success: false });
+      } else {
+        db.close();
+        var url = req.query.url;
+        url += "/first";
+        url += "?corpname=" + req.query.corpus;
+        url += "&username=" + req.query.username;
+        url += "&api_key=" + req.query.apikey;
+        url += "&format=json";
+        if (req.query.querytype == "skesimple") { url += "&iquery=" + encodeURIComponent(req.query.query) } else { url += "&queryselector=cqlrow&cql=" + encodeURIComponent(req.query.query) }
+        url += "&viewmode=sen";
+        url += "&gdex_enabled=1";
+  
+        if ('refs' in configs.xampl && configs.xampl.refs != '') url += "&refs=" + configs.xampl.refs;
+        if (req.query.fromp) url += "&" + req.query.fromp;
 
-    console.log(url);
-
-      if (req.query.fromp) url += "&" + req.query.fromp;
-      https.get(url, function (getres) {
-        getres.setEncoding("utf8");
-        var data = "";
-        getres.on("data", function (chunk) { data += chunk });
-        getres.on("end", function () {
-          try { var json = JSON.parse(data) } catch (e) { json = {} }
-          res.json(json);
+        https.get(url, function (getres) {
+          getres.setEncoding("utf8");
+          var data = "";
+          getres.on("data", function (chunk) { data += chunk });
+          getres.on("end", function () {
+            try { var json = JSON.parse(data) } catch (e) { json = {} }
+            res.json(json);
+          });
         });
-      });
-      // res.json({Lines: [
-      //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
-      //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
-      //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
-      // ]});
-    }
+        // res.json({Lines: [
+        //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
+        //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
+        //   {Left: [{str: "Lorem ipsum "}], Kwic: [{str: req.query.iquery}], Right: [{str: " lorem ipsum."}]},
+        // ]});
+      }
+    });
   });
 });
 app.get(siteconfig.rootPath + ":dictID/skeget/thes/", function (req, res) {
