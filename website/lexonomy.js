@@ -1044,10 +1044,6 @@ app.get(siteconfig.rootPath + ":dictID/import.json", function (req, res) {
 
 // SKETCH ENGINE PROXY:
 app.get(siteconfig.rootPath + ":dictID/skeget/xampl/", function (req, res) {
-	process.stderr.write("\n\n");
-	process.stderr.write("HERERER!");
-	process.stderr.write("\n\n");
-
   if (!ops.dictExists(req.params.dictID)) { res.status(404).render("404.ejs", { siteconfig: siteconfig }); return }
   var db = ops.getDB(req.params.dictID, true);
   ops.readDictConfigs(db, req.params.dictID, function (configs) {

@@ -268,7 +268,7 @@ Ske.searchExamples=function(fromp){
   var query=$.trim($(".skebox input.textbox:enabled").val());
   var querytype=$("input[name=skesearchtype]:checked").val();
   if(query!="") {
-    $.get(rootPath+dictID+"/skeget/xampl/", {url: kex.apiurl, corpus: kex.corpus, username: ske_username, apikey: ske_apiKey, querytype: querytype, query: query, fromp: fromp}, function(json){
+    $.get(rootPath+dictID+"/skeget/xampl/", {url: kex.apiurl, corpus: kex.corpus, username: ske_username, apikey: ske_apiKey, querytype: querytype, query: query, fromp: fromp, refs:xampl_refs}, function(json){
         $(".skebox .choices").html("");
         if(json.error && json.error=="Empty result"){
           $(".skebox .choices").html("<div class='error'>No results found.</div>");
