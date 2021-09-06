@@ -81,7 +81,7 @@
 
 		<div class="invelope bottom">
 			<div id="dictfooter">
-				<div class="right"><a href="../">Lexonomy</a></div>
+				<div class="right">Credits: Ka Dienshonhi by Iarington Kharkongngor</div>
 				<div><a href="{{siteconfig["baseUrl"]}}{{dictID}}/">{{dictTitle}}</a></div>
 				%if "licence" in publico and siteconfig["licences"][publico["licence"]]: 
 					<a href="{{siteconfig["licences"][publico["licence"]]["url"]}}" target="_blank"><img src="../{{siteconfig["licences"][publico["licence"]]["icon"]}}" alt="{{siteconfig["licences"][publico["licence"]]["title"]}}"/></a>

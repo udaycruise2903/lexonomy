@@ -7,10 +7,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		%include("head.tpl")
 		<title>Lexonomy</title>
-		<meta property="og:title" content="Lexonomy" />
-		<meta property="og:site_name" content="Lexonomy"/>
-		<meta name="description" content="A platform for writing and publishing dictionaries" />
-		<meta property="og:description" content="A platform for writing and publishing dictionaries" />
+		<meta property="og:title" content="Khasi Dictionary" />
+		<meta property="og:site_name" content="dictionary"/>
+		<meta name="description" content="A Khasi-Khasi Online Dictionary" />
+		<meta property="og:description" content="A Khasi-Khasi Online Dictionary" />
 		<meta property="og:image" content="{{siteconfig["baseUrl"]}}furniture/preview.gif" />
 		<meta property="og:url" content="{{siteconfig["baseUrl"]}}" />
 		<meta name="twitter:url" content="{{siteconfig["baseUrl"]}}" />
