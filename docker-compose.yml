@@ -5,8 +5,13 @@ services:
         build: .
         image: lexonomy
         volumes:
-            - <path to siteconfig.json>:/opt/service/website/siteconfig.json
-            - <path to data directory>:/opt/service/data
+            - siteconfig.json:/home/script/Documents/lexonomy-master/website/siteconfig.json
+            - data:/home/script/Documents/lexonomy-master/data
+
         ports:
             - "8000:8000"
 
+volumes:
+  siteconfig.json:
+  data:
+    
